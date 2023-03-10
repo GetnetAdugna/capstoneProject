@@ -1,52 +1,48 @@
 
-import './App.css';
+import React from 'react'
 
-import Category  from './components/category/category.component'
+import './App.css';
+import Home from "./routes/home/home.component"
+import {Routes ,Route} from "react-router-dom"
+import Navigation  from './routes/navigation/navigation.component';
+import SignIn  from './routes/sign-in/sign-in.component';
+
+
+
+
+
+
+
+function Shop() {
+  return (
+    <div>Shop</div>
+  )
+}
+
+
+
+
 
 
 function App() {
-  const subtitle="Shop Now!"
 
-   const categories=[
-    {
-      title:"Hat",
-      id:1,
-      imageUrl:'https://i.ibb.co/cvpntL1/hats.png'
+ return (
+  <Routes>
 
-    }, {
-      title:"Jackets",
-      id:2,
-      imageUrl:'https://i.ibb.co/px2tCc3/jackets.png'
+      <Route path='/' element={<Navigation/>}>
+          <Route index element={<Home/>}/>
+          <Route path='shop' element={<Shop/ >}/>
 
+          <Route path='signIn' element={<SignIn/ >}/>
+          
+      </Route>
 
-    },
-     {
-      title:"Sneaker",
-      id:2,
-      imageUrl:'https://i.ibb.co/0jqHpnp/sneakers.png'
+     
 
+  </Routes>
 
-    },
-     {
-      title:"Women",
-      id:3,
-      imageUrl:'https://i.ibb.co/GCCdy8t/womens.png'
+ );
 
-    },
-     {
-      title:"Men",
-      id:4,
-      imageUrl:'https://i.ibb.co/R70vBrQ/men.png'
-
-    },
-   ]
-
-  return (
-    
-    <Category  categories={categories} subtitle={subtitle}/>
-    // A draft of each main components
-  
-  );
 }
-
+  
 export default App;
