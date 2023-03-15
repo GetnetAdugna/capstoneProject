@@ -11,13 +11,10 @@ import {
     getAuth,
     signInWithRedirect,
     signInWithPopup,
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
 } from 'firebase/auth'
-
-
-
-
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhtJR6t0vYZnEnu3eeH5EagcmKcTpoWP0",
@@ -34,14 +31,68 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 // google auth
 const provider=new GoogleAuthProvider();
-provider.setCustomParameters({
+const new_provider=new GoogleAuthProvider();
+new_provider.setCustomParameters({
+  
       prompt:"select_account" 
  
 
 })
 
+provider.setCustomParameters({
+  
+      prompt:"select_account" 
+ 
 
+})
+export const db=getFirestore()
+
+export const createUserDocumentFromAuth=async (userAuth)=>{
+
+}
 
 
 export const auth=getAuth()
+export const signInWithGoogleRedirect=()=>signInWithRedirect(auth,provider);
 export const signInWithGooglePopup=()=>signInWithPopup(auth,provider);
+
+
+export const createAStoreForUsers=async(usersInfo,additonalInfo={})=>{
+ 
+  const dbDoc=await doc(db,'users',usersInfo.uid);
+  const docm=await getDoc(dbDoc)
+
+  if (!docm.exists()){
+    const {name,email}=usersInfo;
+    const createdAt= new Date()
+
+    try {
+     
+      await setDoc(dbDoc,{
+        name,
+        email,
+        createdAt,
+        ...additonalInfo
+
+      })
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+
+       return dbDoc
+
+}
+
+export const createAUserWithEmailAndPassword=async(email,password)=>{
+  if (!email || !password) return
+  
+    return  await createUserWithEmailAndPassword(auth,email,password);
+}
+
+export const  UserSignIn=async(email,password)=>{
+  if (!email || !password) return 
+   return await signInWithEmailAndPassword(auth,email,password);
+     
+}

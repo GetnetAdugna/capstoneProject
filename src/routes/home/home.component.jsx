@@ -7,7 +7,7 @@ import React from 'react'
 
 function Home() {
   
-    const subtitle="Shop Now!"
+   const subtitle="Shop Now!"
 
    const categories=[
     {
